@@ -1,0 +1,79 @@
+#include <bits/stdc++.h>
+using namespace std;
+class Node{
+    public:
+    int data;
+    Node* left;
+    Node* right;
+    Node(int d){
+        this->data = d;
+        this->left = nullptr;
+        this->right = nullptr;
+    }
+};
+Node* arrTree(vector<int>&arr, int size){
+    if(size==0){
+        return nullptr;
+    }
+    Node* root = new Node(arr[0]);
+    queue<Node*> q;
+    q.push(root);
+    int i=1;
+    while(!q.empty() && i<size){
+        Node* temp = q.front();
+        q.pop();
+        if(arr[i]!=-1){
+            temp->left = new Node(arr[i]);
+            q.push(temp->left);
+        }
+        i++;
+        if(arr[i]!=-1 && i<size){
+            temp->right = new Node(arr[i]);
+            q.push(temp->right);
+        }
+        i++;
+    }
+    return root;
+}
+int height(Node* &root){
+    if(root==nullptr) return 0;
+
+    int left = height(root->left);
+    int right = height(root->right);
+    return max(left,right)+1;
+}
+bool balanced(Node* &root){
+    if(root==nullptr) return true;
+
+    int lh = height(root->left);
+    int rh = height(root->right);
+    bool left=balanced(root->left);
+    bool right = balanced(root->right);
+    bool check = abs(lh-rh)<=1;
+
+    if(left&&right&&check){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+int main() {
+    int n;
+    cin>>n;
+    string str;
+    vector<int> arr(n);
+    for(int i=0;i<n;i++){
+        cin>>str;
+        if(str=="-1"||str=="null"){
+            arr[i]=-1;
+        }
+        else{
+            arr[i]=stoi(str);
+        }
+    }
+    Node* root = arrTree(arr,n);
+    bool balance = balanced(root);
+    cout<<balance<<endl;
+    return 0;
+}
