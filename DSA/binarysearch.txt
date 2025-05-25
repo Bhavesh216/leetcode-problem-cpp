@@ -1,0 +1,74 @@
+#include<iostream.h>
+#include<conio.h>
+const int max=10;
+class array
+{
+int flag,lower,arr[max],mid;
+int count,i,num;
+public:
+array();
+void add(int item);
+void search(int num);
+};
+array::array()
+{
+count=0;
+for(i=0;i<max;i++)
+{
+arr[i]=0;
+}
+flag=1;
+lower=0;
+}
+void array::add(int item)
+{
+if(count<max)
+{
+arr[count]=item;
+count++;
+}
+else
+cout<<"\n array is full";
+}
+void array::search(int num)
+{
+int upper=count-1;
+for(mid=(lower+upper)/2;lower<=upper;mid=(lower+upper)/2)
+{
+if(arr[mid]==num)
+{
+cout<<"\n the number is at position"<<mid<<"in the array ";
+flag=0;
+break;
+}
+if(arr[mid]>num)
+upper=mid-1;
+else
+lower=mid+1;
+}
+//end of for loop
+if(flag);
+cout<<"\n elements not present in the array";
+}
+// function over
+void main()
+{
+int num ;
+array a;
+a.add(1);
+a.add(2);
+a.add(3);
+a.add(9);
+a.add(11);
+a.add(13);
+a.add(17);
+a.add(25);
+a.add(57);
+a.add(90);
+cout<<"\n enter number to search ";
+cin>>num;
+a.search(num);
+getch();
+}
+
+
